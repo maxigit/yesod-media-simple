@@ -56,6 +56,7 @@ serve = useDefaultPort . warpEnv . liteApp . onMethod "GET" . dispatchTo . rende
 
 -- | Like 'serve', but the media to render results from a 'LiteHandler'
 -- action. This allows the data to render to be computed within the
+
 -- LiteHandler monad, allowing it to respond particularly to the
 -- user's request.
 serveHandler :: RenderContent a => LiteHandler a -> IO ()
@@ -66,7 +67,7 @@ serveHandler = useDefaultPort . warpEnv . liteApp . onMethod "GET" . dispatchTo 
 class RenderContent a where
     -- | Given some data, computes the 'TypedContent' which should be
     -- sent to the client in order to view it.
-    renderContent :: a -> HandlerT site IO TypedContent
+    renderContent :: a -> HandlerFor site TypedContent
 
 instance RenderContent a => RenderContent (IO a) where
     renderContent f = liftIO f >>= renderContent
@@ -169,6 +170,7 @@ imageToDiagramExt img =
 imageFromDynamicImage :: DynamicImage -> (forall a. Image a -> b) -> b
 imageFromDynamicImage (ImageY8     img) f = f img
 imageFromDynamicImage (ImageY16    img) f = f img
+imageFromDynamicImage (ImageY32    img) f = f img
 imageFromDynamicImage (ImageYF     img) f = f img
 imageFromDynamicImage (ImageYA8    img) f = f img
 imageFromDynamicImage (ImageYA16   img) f = f img

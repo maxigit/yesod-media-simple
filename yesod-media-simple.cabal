@@ -23,7 +23,7 @@ library
                        diagrams-core,
                        diagrams-lib >= 1.3 && < 1.5,
                        directory,
-                       JuicyPixels,
+                       JuicyPixels >= 3.3.4,
                        vector,
                        yesod > 1.2
   hs-source-dirs:      src
